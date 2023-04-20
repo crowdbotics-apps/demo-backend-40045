@@ -1,3 +1,6 @@
+import { loginRequest } from "./auth/index.js";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { StyleSheet } from "react-native";
 import React, { useContext } from "react";
 import { OptionsContext } from "@options";
@@ -17,6 +20,7 @@ const LoginTabBar = ({
   descriptors,
   activeTabStyle
 }) => {
+  const dispatch = useDispatch();
   const currentTab = state.routes[state.index];
   return <View style={styles.tabStyle}>
       {state.routes.map(route => <View key={route.key} style={route.key === currentTab.key ? [styles.activeTabStyle, activeTabStyle] : null}>
@@ -157,6 +161,9 @@ const Login = ({
   buttonTextStyle = {},
   activeTabStyle = {}
 }) => {
+  useEffect(() => {
+    dispatch(loginRequest());
+  }, []);
   return <Stack.Navigator headerMode="none">
       <Stack.Screen name="LoginScreen" component={LoginScreen} initialParams={{
       LOGO_IMAGE,
